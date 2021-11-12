@@ -86,7 +86,7 @@ function install() {
     fi
     
     pullSetup
-    docker run -it --rm --name setup -v $OUTPUT_DIR:/bitwarden \
+    docker run -it --rm --name setup -v $OUTPUT_DIR:/ngpass \
         --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
         dotnet Setup.dll -install 1 -domain $DOMAIN -letsencrypt $LETS_ENCRYPT -os $OS \
         -corev $COREVERSION -webv $WEBVERSION -dbname "$DATABASE"
@@ -176,7 +176,7 @@ function updateDatabase() {
     dockerComposeFiles
     MSSQL_ID=$(docker-compose ps -q mssql)
     docker run -i --rm --name setup --network container:$MSSQL_ID \
-        -v $OUTPUT_DIR:/bitwarden --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
+        -v $OUTPUT_DIR:/ngpass --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
         dotnet Setup.dll -update 1 -db 1 -os $OS -corev $COREVERSION -webv $WEBVERSION
     echo "Database update complete"
 }
@@ -203,14 +203,14 @@ function update() {
     then
         pullSetup
     fi
-    docker run -i --rm --name setup -v $OUTPUT_DIR:/bitwarden \
+    docker run -i --rm --name setup -v $OUTPUT_DIR:/ngpass \
         --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
         dotnet Setup.dll -update 1 -os $OS -corev $COREVERSION -webv $WEBVERSION
 }
 
 function printEnvironment() {
     pullSetup
-    docker run -i --rm --name setup -v $OUTPUT_DIR:/bitwarden \
+    docker run -i --rm --name setup -v $OUTPUT_DIR:/ngpass \
         --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
         dotnet Setup.dll -printenv 1 -os $OS -corev $COREVERSION -webv $WEBVERSION
 }

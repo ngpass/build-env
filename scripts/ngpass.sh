@@ -2,18 +2,18 @@
 set -e
 
 cat << "EOF"
- _     _ _                         _            
-| |__ (_) |___      ____ _ _ __ __| | ___ _ __  
-| '_ \| | __\ \ /\ / / _` | '__/ _` |/ _ \ '_ \ 
-| |_) | | |_ \ V  V / (_| | | | (_| |  __/ | | |
-|_.__/|_|\__| \_/\_/ \__,_|_|  \__,_|\___|_| |_|
+ _ __   __ _ _ __   __ _ ___ ___ 
+| '_ \ / _` | '_ \ / _` / __/ __|
+| | | | (_| | |_) | (_| \__ \__ \
+|_| |_|\__, | .__/ \__,_|___/___/
+        __/ | |                  
+       |___/|_|             
 
 EOF
 
 cat << EOF
 Open source password management solutions
-Copyright 2015-$(date +'%Y'), 8bit Solutions LLC
-https://bitwarden.com, https://github.com/bitwarden
+Copyright 2021-$(date +'%Y'), No Solution
 
 ===================================================
 
@@ -98,7 +98,6 @@ renewcert
 rebuild
 help
 
-See more at https://bitwarden.com/help/article/install-on-premise/#script-commands-reference
 
 EOT
 }
