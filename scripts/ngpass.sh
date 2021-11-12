@@ -85,6 +85,7 @@ function listCommands() {
 cat << EOT
 Available commands:
 
+devinstall
 install
 start
 restart
@@ -105,6 +106,12 @@ EOT
 # Commands
 
 case $1 in
+    "devinstall")
+        checkOutputDirNotExists
+        mkdir -p $OUTPUT
+        downloadRunFile
+        $SCRIPTS_DIR/run.sh devinstall $OUTPUT $COREVERSION $WEBVERSION
+        ;;
     "install")
         checkOutputDirNotExists
         mkdir -p $OUTPUT

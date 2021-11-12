@@ -84,8 +84,13 @@ function install() {
     then
         DATABASE="vault"
     fi
-    
-    pullSetup
+
+    if [ "$DEVINST" == "1" ]
+    then
+      echo "=============== Using local setup image ==============="
+    else
+      pullSetup
+    fi
     docker run -it --rm --name setup -v $OUTPUT_DIR:/ngpass \
         --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
         dotnet Setup.dll -install 1 -domain $DOMAIN -letsencrypt $LETS_ENCRYPT -os $OS \
@@ -217,7 +222,12 @@ function printEnvironment() {
 
 function restart() {
     dockerComposeDown
-    dockerComposePull
+    if [ "$DEVINST" == "1" ]
+    then
+      echo "=============== Using local images ===================="
+    else
+      dockerComposePull
+    fi
     updateLetsEncrypt
     dockerComposeUp
     printEnvironment
@@ -225,7 +235,12 @@ function restart() {
 
 function certRestart() {
     dockerComposeDown
-    dockerComposePull
+    if [ "$DEVINST" == "1" ]
+    then
+      echo "=============== Using local images ===================="
+    else
+      dockerComposePull
+    fi
     forceUpdateLetsEncrypt
     dockerComposeUp
     printEnvironment
@@ -238,6 +253,10 @@ function pullSetup() {
 # Commands
 
 case $1 in
+    "devinstall")
+	DEVINST="1"
+        install
+        ;;
     "install")
         install
         ;;
