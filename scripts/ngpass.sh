@@ -87,6 +87,7 @@ Available commands:
 
 devinstall
 install
+devstart
 start
 restart
 stop
@@ -111,6 +112,10 @@ case $1 in
         mkdir -p $OUTPUT
         downloadRunFile
         $SCRIPTS_DIR/run.sh devinstall $OUTPUT $COREVERSION $WEBVERSION
+        ;;
+    "devstart" | "devrestart")
+        checkOutputDirExists
+        $SCRIPTS_DIR/run.sh devrestart $OUTPUT $COREVERSION $WEBVERSION
         ;;
     "install")
         checkOutputDirNotExists

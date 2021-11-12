@@ -177,7 +177,7 @@ function forceUpdateLetsEncrypt() {
 }
 
 function updateDatabase() {
-    pullSetup
+    #pullSetup
     dockerComposeFiles
     MSSQL_ID=$(docker-compose ps -q mssql)
     docker run -i --rm --name setup --network container:$MSSQL_ID \
@@ -256,6 +256,10 @@ case $1 in
     "devinstall")
 	DEVINST="1"
         install
+        ;;
+    "devstart" | "devrestart")
+	DEVINST="1"
+        restart
         ;;
     "install")
         install
