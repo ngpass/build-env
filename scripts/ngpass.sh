@@ -31,13 +31,13 @@ then
 fi
 
 SCRIPTS_DIR="$OUTPUT/scripts"
-GITHUB_BASE_URL="https://raw.githubusercontent.com/bitwarden/server/master"
+GITHUB_BASE_URL="https://raw.githubusercontent.com/ngpass/build-env/main"
 
 # Please do not create pull requests modifying the version numbers.
-COREVERSION="1.44.1"
-WEBVERSION="2.24.2"
+COREVERSION="latest"
+WEBVERSION="latest"
 
-echo "bitwarden.sh version $COREVERSION"
+echo "ngpass.sh version $COREVERSION"
 docker --version
 docker-compose --version
 
@@ -46,7 +46,7 @@ echo ""
 # Functions
 
 function downloadSelf() {
-    if curl -s -w "http_code %{http_code}" -o $SCRIPT_PATH.1 $GITHUB_BASE_URL/scripts/bitwarden.sh | grep -q "^http_code 20[0-9]"
+    if curl -s -w "http_code %{http_code}" -o $SCRIPT_PATH.1 $GITHUB_BASE_URL/scripts/ngpass.sh | grep -q "^http_code 20[0-9]"
     then
         mv $SCRIPT_PATH.1 $SCRIPT_PATH
         chmod u+x $SCRIPT_PATH

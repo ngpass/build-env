@@ -47,7 +47,7 @@ fi
 
 function install() {
     LETS_ENCRYPT="n"
-    echo -e -n "${CYAN}(!)${NC} Enter the domain name for your Bitwarden instance (ex. bitwarden.example.com): "
+    echo -e -n "${CYAN}(!)${NC} Enter the domain name for your Bitwarden instance (ex. ngpass.example.com): "
     read DOMAIN
     echo ""
     
@@ -87,7 +87,7 @@ function install() {
     
     pullSetup
     docker run -it --rm --name setup -v $OUTPUT_DIR:/bitwarden \
-        --env-file $ENV_DIR/uid.env bitwarden/setup:$COREVERSION \
+        --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
         dotnet Setup.dll -install 1 -domain $DOMAIN -letsencrypt $LETS_ENCRYPT -os $OS \
         -corev $COREVERSION -webv $WEBVERSION -dbname "$DATABASE"
 }
@@ -147,8 +147,8 @@ function createDir() {
 }
 
 function dockerPrune() {
-    docker image prune --all --force --filter="label=com.bitwarden.product=bitwarden" \
-        --filter="label!=com.bitwarden.project=setup"
+    docker image prune --all --force --filter="label=com.ngpass.product=ngpass" \
+        --filter="label!=com.ngpass.project=setup"
 }
 
 function updateLetsEncrypt() {
@@ -176,7 +176,7 @@ function updateDatabase() {
     dockerComposeFiles
     MSSQL_ID=$(docker-compose ps -q mssql)
     docker run -i --rm --name setup --network container:$MSSQL_ID \
-        -v $OUTPUT_DIR:/bitwarden --env-file $ENV_DIR/uid.env bitwarden/setup:$COREVERSION \
+        -v $OUTPUT_DIR:/bitwarden --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
         dotnet Setup.dll -update 1 -db 1 -os $OS -corev $COREVERSION -webv $WEBVERSION
     echo "Database update complete"
 }
@@ -204,14 +204,14 @@ function update() {
         pullSetup
     fi
     docker run -i --rm --name setup -v $OUTPUT_DIR:/bitwarden \
-        --env-file $ENV_DIR/uid.env bitwarden/setup:$COREVERSION \
+        --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
         dotnet Setup.dll -update 1 -os $OS -corev $COREVERSION -webv $WEBVERSION
 }
 
 function printEnvironment() {
     pullSetup
     docker run -i --rm --name setup -v $OUTPUT_DIR:/bitwarden \
-        --env-file $ENV_DIR/uid.env bitwarden/setup:$COREVERSION \
+        --env-file $ENV_DIR/uid.env ngpass/setup:$COREVERSION \
         dotnet Setup.dll -printenv 1 -os $OS -corev $COREVERSION -webv $WEBVERSION
 }
 
@@ -232,7 +232,7 @@ function certRestart() {
 }
 
 function pullSetup() {
-    docker pull bitwarden/setup:$COREVERSION
+    docker pull ngpass/setup:$COREVERSION
 }
 
 # Commands
