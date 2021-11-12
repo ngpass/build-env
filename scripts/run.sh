@@ -47,7 +47,7 @@ fi
 
 function install() {
     LETS_ENCRYPT="n"
-    echo -e -n "${CYAN}(!)${NC} Enter the domain name for your Bitwarden instance (ex. ngpass.example.com): "
+    echo -e -n "${CYAN}(!)${NC} Enter the domain name for your ngpass instance (ex. ngpass.example.com): "
     read DOMAIN
     echo ""
     
@@ -76,7 +76,7 @@ function install() {
         fi
     fi
 
-    echo -e -n "${CYAN}(!)${NC} Enter the database name for your Bitwarden instance (ex. vault): "
+    echo -e -n "${CYAN}(!)${NC} Enter the database name for your ngpass instance (ex. vault): "
     read DATABASE
     echo ""
 
